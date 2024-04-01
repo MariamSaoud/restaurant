@@ -3,7 +3,7 @@ const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
 const SECRET_KEY="NOTESAPI";
 module.exports=(req,res,next)=>{
-    const authHeader=req.headers.authorization;;
+    const authHeader=req.headers.authorization;
     console.log(authHeader);
     if(!authHeader){
         return res.status(401).json({msg:'Not authenticated!!!'});
@@ -19,6 +19,6 @@ module.exports=(req,res,next)=>{
     if(!decodedToken){
         return res.status(401).json({msg:'Not authenticated'});
     }
-    req.Managerid= decodedToken.Managerid;
+    req.id= decodedToken.Managerid;
     next();
 }

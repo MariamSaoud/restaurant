@@ -1,6 +1,7 @@
-//1- npm init  2- npm install --save express 3-npm install --save mysql2  4-npm install --save sequelize after mysql2 5-npm install --save body-parser  6- npm install --save multer 7-npm install bcrypt 8- npm install jsonwebtoken 9-npm install express-validator/npm install joi
-const express= require('express');
+//1- npm init  2- npm install --save express 3-npm install --save mysql2  4-npm install --save sequelize after mysql2 5-npm install --save body-parser  6- npm install --save multer 7-npm install bcrypt 8- npm install jsonwebtoken 9-npm install joi 10-npm install fs 11-npm install nodemon
+const express = require("express"); 
 const path=require('path');
+const fs=require('fs');
 const bodyParser = require('body-parser');
 const multer=require('multer');
 const sequelize= require('./database');
@@ -55,11 +56,32 @@ app.use('/user',userRouter);
 app.use('/manager',managerRouter);
 
 //relationShip
-User.belongsToMany(Food,{through:'grade'});
-Food.belongsToMany(User,{through:'grade'});
+User.hasMany(grade);
+grade.belongsTo(User);
+
+Food.hasMany(grade, {
+    foreignKey: "FoodFoodid",
+    as: "grades"
+});
+grade.belongsTo(Food, {
+    foreignKey: "FoodFoodid",
+    as: "food"
+});
 
 category.hasMany(Food);
 Food.belongsTo(category);
+
+Manager.hasMany(category);
+category.belongsTo(Manager);
+
+Manager.hasMany(Food);
+Food.belongsTo(Manager);
+
+Manager.hasMany(FoodContent);
+FoodContent.belongsTo(Manager);
+
+Manager.hasMany(Tags);
+Tags.belongsTo(Manager);
 
 Manager.hasMany(Manager);
 Manager.belongsTo(Manager);
@@ -67,15 +89,15 @@ Manager.belongsTo(Manager);
 category.hasMany(category);
 category.belongsTo(category);
 
-Manager.belongsToMany(Food,{through:'Manage'});
-Food.belongsToMany(Manager,{through:'Manage'});
+Manager.belongsToMany(Food,{through:Manage});
+Food.belongsToMany(Manager,{through:Manage});
 
-Tags.belongsToMany(Food,{through:'same'});
-Food.belongsToMany(Tags,{through:'same'});
+Tags.belongsToMany(Food,{through:same});
+Food.belongsToMany(Tags,{through:same});
 
-FoodContent.belongsToMany(Food,{through:'Content'});
-Food.belongsToMany(FoodContent,{through:'Content'});
+FoodContent.belongsToMany(Food,{through:Content});
+Food.belongsToMany(FoodContent,{through:Content});
 
-//sequelize.sync({force:true, alter:true});  //to create DB
+//sequelize.sync({alter:true});  //to create DB force:true the data will go on but alter:true the data will still in DB
 sequelize.authenticate();  //connect
-app.listen(6003);
+app.listen(6005);

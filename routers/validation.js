@@ -5,8 +5,7 @@ const SignUpSchema=Joi.object({
     Userpassword:Joi.string().min(5).max(20).required(),
     Username:Joi.string().required()
 }); 
-const validateRequest = (SignUpSchema) => {
-    const ret= async (req, res, next) => {
+const validateRequest =async (req, res, next) => {
             const result = await SignUpSchema.validate(req.body);
           //console.log(result);
             if (result.error) {
@@ -15,7 +14,6 @@ const validateRequest = (SignUpSchema) => {
             });
             }
             //req.body = result.value.body;
-          //next();        
+          next() ;     
     }
-    } 
     module.exports=validateRequest;  

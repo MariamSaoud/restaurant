@@ -4,7 +4,8 @@
   "description": "this is a restaurant app & it's my first app",
   "main": "app.js",
   "scripts": {
-    "test": "nothing"
+    "test": "nothing",
+    "start": "nodemon app.js"
   },
   "keywords": [
     "restaurant"
@@ -17,10 +18,12 @@
     "express": "^4.18.2",
     "express-validation": "^4.1.0",
     "express-validator": "^7.0.1",
+    "fs": "^0.0.1-security",
     "joi": "^17.10.2",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.6.1",
+    "nodemon": "^3.0.1",
     "sequelize": "^6.33.0"
   },
   "devDependencies": {
